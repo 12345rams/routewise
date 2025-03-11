@@ -151,14 +151,35 @@ const Home = () => {
             </div>
           ) :(
             <div className="passengers card contentLeft-container">
-              <div className="titleLeft-container"> <h1>Passengers Details</h1></div>
-             
-              {passengers.filter((p) => p.email.toLowerCase().includes(searchTerm.toLowerCase())).map((passenger) => (
-                <div key={passenger._id} className="passenger card" onClick={() => flyToPosition(passenger.currLocation?.latitude, passenger.currLocation?.longitude, passenger.email)}>
-                  <i className="bi bi-person-circle"></i>
-                  <div>{passenger.email}</div>
-                </div>
-              ))}
+              <div className="titleLeft-container">
+                <h1>Passengers Details</h1>
+              </div>
+              <div className="search-bus">
+                <i className="bi bi-search"></i>
+                <input
+                  type="text"
+                  placeholder="Search for a Passenger"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              {passengers
+                .filter((p) => p.email.toLowerCase().includes(searchTerm.toLowerCase()))
+                .map((passenger) => (
+                  <div
+                    key={passenger._id}
+                    className="passenger card"
+                    onClick={() => {
+                      if (passenger.currLocation) {
+                        flyToPosition(passenger.currLocation.latitude, passenger.currLocation.longitude, passenger.email);
+                      }
+                    }}
+                  >
+                    <i className="bi bi-person-circle"></i>
+                    <div>{passenger.email}</div>
+                    <i className="bi bi-crosshair " style={{fontSize:"1.5rem"}}></i>
+                  </div>
+                ))}
             </div>
           )}
         </div>

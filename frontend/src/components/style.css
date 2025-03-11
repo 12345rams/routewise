@@ -1,0 +1,326 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0;
+    background-color: #f8f9fa;
+
+}
+
+.time {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.search-bar input {
+    padding: 5px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.content-container {
+    display: flex;
+    padding: 10px;
+}
+
+.info-section {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-box {
+    background-color: #f0f8ff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.map-container {
+    width: 69%;
+    padding: 0 0;
+    background-color: #e6f7ff;
+    border-radius: 8px;
+    margin-left: 10px;
+}
+
+#map {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    height: 100% !important;
+}
+
+.map-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.map-buttons button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.map-buttons button:hover {
+    background-color: #45a049;
+}
+
+.home {
+    width: 100%;
+
+}
+
+.leaflet-popup {
+    max-width: 150px !important;
+}
+
+.leaflet-popup.leaflet-zoom-animated {
+    max-width: 150px !important;
+}
+
+.leaflet-popup-content-wrapper {
+
+    border-radius: 8px !important;
+    padding: 1px !important;
+    font-size: 12px !important;
+    width: 250px !important;
+    text-align: center;
+}
+
+.leaflet-popup-content {
+    font-size: 1rem !important;
+    text-align: center;
+    width: 200px !important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: tomato;
+    background-color: white;
+}
+
+.overlay {
+    position: fixed;
+    top: 10px;
+    left: 60%;
+    max-width: 500px;
+    transform: translateX(-50%);
+    background: white;
+    padding: 5px 5px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.location-input-container {
+    display: flex;
+    flex-direction:column;
+    gap: 10px;
+}
+
+.location-input-container input {
+    padding: 8px;
+    width: 250px;
+    border:none;
+    border-radius: 5px;
+}
+.location-input-container input:focus {
+    outline: none;
+}
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.buttons button {
+    padding: 8px 12px;
+    border: none;
+    background: #4CAF50;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttons button:last-child {
+    background: red;
+}
+
+.fill_location {
+    display: none;
+}
+
+.leaflet-control-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    position: relative;
+    left: 0px;
+    max-width: 200px;
+    background-color: white;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+    display: flex;
+    border: #80CBC4 solid;
+
+}
+
+span {
+    color: #000000;
+    background-color: white;
+}
+
+.left-container {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    padding: 0 0;
+}
+
+.left-content {
+    width: 30%;
+    border: 5px solid #ffbf3f;
+}
+
+.home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleLeft-container {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0px 0px;
+    background-color: #ffbf3f !important;
+    padding: 0 0;
+}
+.buses,.passengers{
+    border: none !important;
+}
+
+.left-content {
+    width: 30%;
+}
+
+.passengers h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+.passenger i,.bus i{
+    color: red;
+    cursor: pointer;
+    font-size:1rem;
+    margin-left:10px;
+}
+.passenger div,.bus div{
+    margin-left: 10px;
+}
+.contentLeft-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.buses,.passengers{
+   overflow: auto;
+}
+.bus,
+.passenger,
+.left-content {
+    border: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    padding: 0 0;
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    width: 5%;
+    background-color: #f8f9fa;
+    border: #ffbf3f solid;
+    padding: 10px;
+    gap: 10px;
+}
+.bus,.passenger{
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    border-bottom:2px solid #a6a6a6 !important;
+    border-radius: 0px !important;
+    padding: 10px !important;
+    margin: 0px !important;
+    width: 400px !important;
+    overflow:hidden ;
+    height: auto;
+}
+.search-bus {
+    border-radius: 4px !important;
+    padding: 10px;
+    display: flex;
+    width: 90%;
+    border: 1px solid #f0eaea;
+    border-radius: 15% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 10px;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.search-bus input {
+    padding: 5px;
+    width: 90%;
+    border: none;
+    border-radius: 4px;
+}
+.search-bus input:focus {
+    outline: none;
+}
+.passengers::-webkit-scrollbar,.buses::-webkit-scrollbar {
+    width: 2px; 
+  }
+  
+  .passengers::-webkit-scrollbar-track,.buses::-webkit-scrollbar-track{
+    background: #f1f1f1; 
+    border-radius: 10px;
+  }
+  
+  .passengers::-webkit-scrollbar-thumb,.buses::-webkit-scrollbar-thumb {
+    background: #ffbf3f;
+    border-radius: 10px;
+  }
+  
+  .passengers::-webkit-scrollbar-thumb:hover,.buses::-webkit-scrollbar-thumb:hover {
+    background: #ffbf3f;
+  }
+  .add-button{
+    background-color: #ffbf3f;
+   color: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+  }

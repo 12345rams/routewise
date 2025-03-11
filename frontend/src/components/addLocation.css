@@ -1,0 +1,126 @@
+.overlay{
+    width: 40%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.location-input-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.bus-route-overlay{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    top: 10px;
+    left: 18%;
+    position:fixed;
+    max-width: 300px;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+.bus-route-title{
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0px -5px;
+    background-color: #ffbf3f !important;
+    padding: 0 0;
+    font-size: 26px;
+    padding: 0 0;
+    font-weight: bold;
+    
+}
+.bus-route-container{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0px 5px;
+    
+}
+.bus-route-container div{
+    display: flex;
+    flex-direction:column;
+}
+.bus-route-container input{
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.addBusBtn{
+    background-color: #ffbf3f;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    margin-top: 5px;
+}
+.start_location_search
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2px 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
+
+}
+.list-group-item{
+    padding: 10px;
+    border: none !important;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.list-group-item:hover{
+    background-color: #f5f5f5 !important;
+}
+.bus-route-form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 2px 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
+    overflow-y: auto;
+    max-height: 600px;
+
+}
+.bus-route-form::-webkit-scrollbar {
+    width: 2px; 
+  }
+  
+  .bus-route-form::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+  }
+  
+  .bus-route-form::-webkit-scrollbar-thumb {
+    background: #ffbf3f;
+    border-radius: 10px;
+  }
+  
+  .bus-route-form::-webkit-scrollbar-thumb:hover {
+    background: #ffbf3f;
+  }
+  .time{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+  }
+  .time input{
+    padding: 8px;
+    width: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }

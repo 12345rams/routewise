@@ -1,23 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-*{ margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: inherit;
-    background: none;
-    border: none;
-    outline: none;
-   
-   overflow: hidden;
-   background-color: white;
-   color: black;
-}
-* {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    font-family: 'Poppins', sans-serif; /* Apply to entire page */
-}
-
 h2, h4 {
     font-weight: 600;
 }
@@ -29,7 +10,13 @@ p {
 input, button {
     font-family: inherit;
 }
-
+.signup{
+    position: fixed;
+    top: 0px;
+    left: 4%;
+    z-index: 2000;
+    background-color: white;
+}
 .signupcontainer{
     color: black;
     display: flex;
@@ -41,8 +28,6 @@ input, button {
     margin-right: 40px;
     margin-left: 100px;
     margin-top: 20px;
-
-
 }
 .signupform{
     display: flex;
@@ -50,8 +35,6 @@ input, button {
     justify-content: center;
     align-items: start;
     font-size: x-small;
-   
-   
 }
 .logo{
     margin: 5px;

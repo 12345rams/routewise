@@ -17,3 +17,23 @@ exports.login=async(req,res)=>{
     res.status(400).json({message:error.message});
    }
 }
+exports.updateLocation=async(req,res)=>{
+    try{
+      console.log(req.body);
+      const response=await userService.updateLocation(req.body);
+      res.status(201).json(response);
+    }
+    catch(error){
+        res.status(400).json({message:error.message});
+    }
+}
+exports.getAllUser=async(req,res)=>{
+    try{
+      const response=await userService.getAllUser();
+      res.status(201).json(response);
+    }
+    catch(error){
+        res.status(400).json({message:error.message});
+    }
+}
+

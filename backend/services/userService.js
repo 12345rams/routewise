@@ -29,6 +29,24 @@ const login=async(credential)=>{
     );
     return token;
 }
+const updateLocation = async (data) => {
+        const token = data.token;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.id;
+        //console.log(decoded);
+        await User.findByIdAndUpdate(userId, {
+            currLocation: {
+                latitude: data.latitude,
+                longitude: data.longitude
+            }
+        });
+        return { success: true, message: "Location updated successfully" };
+};
+const getAllUser =async()=>{
+ const response=await User.find();
+ return response;
+}
+
 module.exports={
-    login,register
+    login,register,updateLocation,getAllUser
 }

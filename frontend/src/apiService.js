@@ -23,7 +23,6 @@ export const loginUser = async (email, password) => {
     return response;
 };
 export const fetchPassengers = async () => {
-    console.log(API_KEY);
     try {
       const response = await fetch(`${BASE_URL}/user/getAllUser`);
       return await response.json();
@@ -111,6 +110,33 @@ export const fetchPassengers = async () => {
           console.error("Error fetching route:", error);
           return null;
       }
+  };
+  export const updateUserLocation = async (token, coordinates) => {
+    console.log(token);
+    console.log(coordinates);
+    try {
+      const response = await fetch(`${BASE_URL}/user/updateLocation`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          token,
+          latitude: coordinates.lat,
+          longitude: coordinates.lng,
+        }),
+      });
+  
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to update location");
+      }
+      return data;
+    } catch (error) {
+      console.error("Error updating user location:", error);
+      return null;
+    }
   };
   
 

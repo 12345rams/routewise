@@ -26,13 +26,14 @@ const Signup = () => {
         setError("");
 
         try {
-            const data = await registerUser(email, password);
+        let data = await registerUser(email, password);
             alert("Signup successful!");
             const response = await loginUser(email, password);
             if (!response&&data) {
                 throw new Error(response.message || "Sign in failed!");
             }
-            localStorage.setItem("token", response);
+            data=await response.json();
+            localStorage.setItem("token",data);
             navigate('/');
             
         } catch (err) {

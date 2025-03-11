@@ -3,6 +3,7 @@ import L from "leaflet";
 import "./style.css";
 import "./addLocation.css";
 import myBusIcon from "../assets/images/placeholder-removebg-preview.png";
+import { updateUserLocation } from "../apiService";
 const AddLocation = ({ map }) => {
   const [location, setLocation] = useState("");
   const [predictions, setPredictions] = useState([]);
@@ -85,22 +86,7 @@ const AddLocation = ({ map }) => {
     }
 
     try {
-      console.log("hellow");
-      const response = await fetch("http://localhost:4000/user/updateLocation", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          token: token,
-          latitude: coordinates.lat,
-          longitude: coordinates.lng,
-        }),
-      });
-    
-      const data = await response.json();
-
+      const data =await updateUserLocation(token, coordinates);
       if (data.success) {
         alert("Location updated successfully!");
       } else {

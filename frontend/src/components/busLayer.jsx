@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import polyline from "polyline"; 
 import myBusIcon from "../assets/images/bus-stop-removebg-preview.png";
 import myBusStop from "../assets/images/bus-stop__1_-removebg-preview.png";
-const API_KEY = "AlzaSyOYvWL6SA9cPUDSytlFzE11WocCBfKvTAn";
+const API_KEY = import.meta.env.VITE_API_KEY;
 import { fetchBuses } from "../apiService";
 
 const BusMap = ({ map,bus1}) => {

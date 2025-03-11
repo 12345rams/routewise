@@ -4,7 +4,7 @@ import "./style.css";
 import "./addLocation.css";
 import myBusIcon from "../assets/images/bus-stop-removebg-preview.png";
 import { createBus, fetchRoute } from "../apiService";
-const API_KEY = "AlzaSyOYvWL6SA9cPUDSytlFzE11WocCBfKvTAn";
+const API_KEY =import.meta.env.VITE_API_KEY;
 const BusRouteManager = ({ map }) => {
     const [busDetails, setBusDetails] = useState({
         busId: "",

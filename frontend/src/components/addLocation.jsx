@@ -9,7 +9,7 @@ const AddLocation = ({ map }) => {
   const [selectedPlaceId, setSelectedPlaceId] = useState(null);
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [time, setTime] = useState(new Date().toLocaleTimeString());
-  const API_KEY = "AlzaSyOYvWL6SA9cPUDSytlFzE11WocCBfKvTAn";
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const interval = setInterval(() => {

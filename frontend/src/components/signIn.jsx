@@ -6,7 +6,6 @@ import bus from "../assets/images/uri_ifs___M_152c3fc7-bbc8-4388-8938-2702edeb45
 import { loginUser } from "../apiService";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import "./signup.css"; 
-
 const SignIn = ({isLoggedIn}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -23,9 +22,8 @@ const SignIn = ({isLoggedIn}) => {
                 throw new Error(response.message || "Sign in failed!");
             }
             localStorage.setItem("token", response);
-            isLoggedIn=true;
+            isLoggedIn=false;
             navigate('/');
-
         } catch (err) {
             setError(err.message);
         } finally {

@@ -7,7 +7,7 @@ import bus from "../assets/images/uri_ifs___M_152c3fc7-bbc8-4388-8938-2702edeb45
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./signup.css";
 import { useNavigate } from "react-router-dom"; 
-const Signup = () => {
+const Signup = ({isLoggedIn}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -16,24 +16,22 @@ const Signup = () => {
      const navigate=useNavigate();
     const handleSignup = async (e) => {
         e.preventDefault();
-
         if (password !== repeatPassword) {
             setError("Passwords do not match!");
             return;
         }
-
         setLoading(true);
         setError("");
-
         try {
         let data = await registerUser(email, password);
-            alert("Signup successful!");
+           // alert("Signup successful!");
             const response = await loginUser(email, password);
             if (!response&&data) {
                 throw new Error(response.message || "Sign in failed!");
             }
             data=await response.json();
             localStorage.setItem("token",data);
+            isLoggedIn=true;
             navigate('/');
             
         } catch (err) {
@@ -57,9 +55,7 @@ const Signup = () => {
                             <div>Sign up with Google</div>
                         </div>
                     </button>
-
                     <p className="or-text">or</p>
-
                     <form className="signupform" onSubmit={handleSignup}>
                         <label htmlFor="email">Email address</label>
                         <input

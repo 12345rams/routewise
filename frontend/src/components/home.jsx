@@ -8,8 +8,9 @@ import AddBusLocation from "./addBusLocation";
 import BusMap from "./busLayer";
 import Signup from "./signup";
 import passengerIcon from '../assets/images/placeholder-removebg-preview.png'
-import { fetchPassengers, fetchBuses } from "../apiService"; 
-
+import { fetchPassengers, fetchBuses,updateUserLocation} from "../apiService"; 
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 const Home = () => {
   const mapRef = useRef(null);
   const markerRef = useRef(null);
@@ -20,7 +21,7 @@ const Home = () => {
   const [buses, setBuses] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.token !== "");
   const [passengers, setPassengers] = useState([]);
-
+  const navigate =useNavigate();
   useEffect(() => {
     const loadPassengers = async () => {
       const data = await fetchPassengers();
@@ -61,16 +62,19 @@ const Home = () => {
     iconUrl: markerPerson,
     iconSize: [30, 40],
   });
-
-  const locateMe = () => {
+  const locateMe = async() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
+       async (position) => {
+          let lat = position.coords.latitude;
+          let lng = position.coords.longitude;
           if (!mapRef.current) return;
           mapRef.current.setView([lat, lng], 15);
-
+          const token = localStorage.getItem("token"); 
+          if (!token) {
+            navigate("/signup");
+            return;
+          }
           if (!markerRef.current) {
             markerRef.current = L.marker([lat, lng], { icon: myIcon })
               .addTo(mapRef.current)
@@ -79,13 +83,25 @@ const Home = () => {
           } else {
             markerRef.current.setLatLng([lat, lng]);
           }
+          const coordinates={
+            lat,
+            lng
+          }
+          
+            const data =await updateUserLocation(token, coordinates);
+            if (data.success) {
+             // alert("Location updated successfully!");
+             toast.success("location added succefully");
+            } else {
+              toast.error(`Failed to update location: ${data.message}`);
+            }
         },
         (error) => {
-          alert("Error getting location: " + error.message);
+          toast.error("Error getting location: " + error.message);
         }
       );
     } else {
-      alert("Geolocation is not supported by this browser.");
+      toast.error("Geolocation is not supported by this browser.");
     }
   };
 
@@ -188,6 +204,7 @@ const Home = () => {
         </div>
         {showAddLocation && <AddLocation map={mapRef.current} />}
         {addBuses && <AddBusLocation map={mapRef.current} />}
+        <ToastContainer />
       </div>
     </div>
   );

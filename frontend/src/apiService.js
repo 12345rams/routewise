@@ -112,8 +112,6 @@ export const fetchPassengers = async () => {
       }
   };
   export const updateUserLocation = async (token, coordinates) => {
-    console.log(token);
-    console.log(coordinates);
     try {
       const response = await fetch(`${BASE_URL}/user/updateLocation`, {
         method: "POST",

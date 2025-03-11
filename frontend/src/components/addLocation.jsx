@@ -4,6 +4,7 @@ import "./style.css";
 import "./addLocation.css";
 import myBusIcon from "../assets/images/placeholder-removebg-preview.png";
 import { updateUserLocation } from "../apiService";
+import { useNavigate } from "react-router-dom";
 const AddLocation = ({ map }) => {
   const [location, setLocation] = useState("");
   const [predictions, setPredictions] = useState([]);
@@ -11,7 +12,7 @@ const AddLocation = ({ map }) => {
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [time, setTime] = useState(new Date().toLocaleTimeString());
   const API_KEY = import.meta.env.VITE_API_KEY;
-
+ const navigate=useNavigate();
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date().toLocaleTimeString());
@@ -76,7 +77,7 @@ const AddLocation = ({ map }) => {
   const saveLocationToDB = async () => {
     const token = localStorage.getItem("token"); 
     if (!token) {
-      alert("User not authenticated!");
+      navigate("/signup");
       return;
     }
 

@@ -31,6 +31,7 @@ const Signup = ({isLoggedIn}) => {
             }
             data=await response.json();
             localStorage.setItem("token",data);
+            localStorage.setItem("username",email);
             isLoggedIn=true;
             navigate('/');
             

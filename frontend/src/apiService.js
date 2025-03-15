@@ -2,6 +2,7 @@
 const API_KEY =import.meta.env.VITE_API_KEY;
 const BASE_URL =import.meta.env.VITE_BASE_URL;
 const MAPS_API_URL = "https://maps.gomaps.pro/maps/api/directions/json";
+import axios from'axios'
 export const registerUser = async (email, password) => {
     const response = await fetch(`${BASE_URL}/user/register`, {
         method: "POST",
@@ -136,5 +137,25 @@ export const fetchPassengers = async () => {
       return null;
     }
   };
+  export  const getMessages = async (sender,receiver) => {
+    if (!receiver) return;
+    try {
+      const res = await axios.get(`${BASE_URL}/chat/messages/${sender}/${receiver}`);
+      return res;
+    } catch (err) {
+      console.error("Error fetching messages:", err);
+      return null;
+    }
+  };
+  export  const sendMessages = async (newMessage) => {
+    try {
+      const res =  await axios.post(`${BASE_URL}/chat/send`, newMessage);
+      return res;
+    } catch (err) {
+      console.error("Error fetching messages:", err);
+      return null;
+    }
+  };
+
   
 

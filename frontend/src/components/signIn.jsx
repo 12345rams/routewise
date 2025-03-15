@@ -22,6 +22,7 @@ const SignIn = ({isLoggedIn}) => {
                 throw new Error(response.message || "Sign in failed!");
             }
             localStorage.setItem("token", response);
+            localStorage.setItem("username",email);
             isLoggedIn=false;
             navigate('/');
         } catch (err) {

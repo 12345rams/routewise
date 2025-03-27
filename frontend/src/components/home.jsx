@@ -135,12 +135,12 @@ const Home = () => {
             <i className="bi bi-bus-front-fill"></i>
             <i className="bi bi-plus-lg"></i>
           </button>
-          <button className="btn btn-info mb-2">
+          {/* <button className="btn btn-info mb-2">
             <i className="bi bi-bus-front-fill"></i>
           </button>
           <button className="btn btn-secondary mb-2">
             <i className="bi bi-person-circle"></i>
-          </button>
+          </button> */}
           <button className="btn btn-danger mb-2" onClick={locateMe}>
             <i className="bi bi-crosshair"></i>
           </button>

@@ -34,7 +34,7 @@
   }
   .menu .items .item {
     height: 70px;
-    border-bottom: 1px solid #ffbf3f;
+    border-bottom: 1px solid #fff;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -43,24 +43,22 @@
   }
   
   .menu .items .item-active {
-    background-color: #ffbf3f ;
+    background-color: grey ;
     color: #FFF;
   }
   
   .menu .items .item:hover {
     cursor: pointer;
-    background-color: #ffbf3f ;
-    color: #cfe5ff;
   }
   
   /* === CONVERSATIONS === */
   
   .discussions {
-    width: 35%;
+    width: 27%;
     height: 700px;
-    box-shadow: 0px 8px 10px rgba(0,0,0,0.20);
+    box-shadow: 0px 8px 10px #fff;
     overflow: auto;
-    background-color: #ffbf3f ;
+    background-color: #fff ;
     display: inline-block;
     padding: 0px 0px;
   }
@@ -69,7 +67,7 @@
     width: 100%;
     height: 90px;
     background-color: #FAFAFA;
-    border-bottom: solid 1px #E0E0E0;
+    border-bottom: solid 1px #E0E0E0 !important;
     display:flex;
     align-items: center;
     cursor: pointer;
@@ -134,6 +132,7 @@
       background-size: cover;
       background-repeat: no-repeat;
   }
+  
   
   .online {
     position: relative;
@@ -256,7 +255,7 @@
   .response {
     float: right;
     margin-right: 0px !important;
-    margin-left:auto; /* flexbox alignment rule */
+    margin-left:auto;
   }
   
   .response .text {
@@ -272,7 +271,6 @@
     bottom: 0;
     background-color: transparent;
     border-top: 2px solid #EEE;
-    
   }
   
   .chat .footer-chat .icon {
@@ -283,7 +281,7 @@
   
   .chat .footer-chat .send {
     color:#fff;
-    background-color: #ffbf3f ;
+    background-color: #fff;
     position: absolute;
     right: 50px;
     padding: 12px 12px 12px 12px;
@@ -333,12 +331,31 @@
   .clickable {
     cursor: pointer;
   }
+
   .passenger-chat-btn{
     width: 100%;
     border-radius: 0.1em;;
-    border-color: #b8b4b4;
+    border-color: #fff;
     margin: 0px 0px;
   }
+  
+  .passenger-chat-btn:hover {
+    background-color: #f0ede3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+  
+  .passenger-chat-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .passenger-chat-btn i {
+    margin-right: 8px;
+    font-size: 16px;
+  }
+  
+  
   .discussions::-webkit-scrollbar {
     width: 2px; 
   }
@@ -349,12 +366,12 @@
   }
   
   .discussions::-webkit-scrollbar-thumb {
-    background: #ffbf3f;
+    background: #fff;
     border-radius: 10px;
   }
   
   .discussions::-webkit-scrollbar-thumb:hover {
-    background: #ffbf3f;
+    background: #fff;
   }
   .sender-message{
     background-color: #ffffff !important;

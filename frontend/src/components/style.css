@@ -19,6 +19,7 @@
     border-radius: 4px;
 }
 
+
 .title {
     text-align: center;
     font-size: 24px;
@@ -52,6 +53,10 @@
     margin-left: 10px;
 }
 
+.passenger_details{
+    background-color: #ffffff;
+}
+
 #map {
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -73,6 +78,11 @@
     border-radius: 4px;
     cursor: pointer;
 }
+#map {
+    height: 100vh;
+    width: 100%;
+  }
+  
 
 .map-buttons button:hover {
     background-color: #45a049;
@@ -208,7 +218,7 @@ span {
     font-size: 24px;
     font-weight: bold;
     margin: 0px 0px;
-    background-color: #ffbf3f !important;
+    background-color: #fff !important;
     padding: 0 0;
 }
 .buses,.passengers{
@@ -241,7 +251,6 @@ span {
 .buses,.passengers{
    overflow: auto;
 }
-.bus,
 .passenger,
 .left-content {
     border: none !important;
@@ -249,17 +258,15 @@ span {
     background: none !important;
     padding: 0 0;
 }
+.bus{
 
-.side-bar {
-    display: flex;
-    flex-direction: column;
-    width: 5%;
-    background-color: #f8f9fa;
-    border: #ffbf3f solid;
-    padding: 10px;
-    gap: 10px;
+    border-bottom: 2px solid #a6a6a6 !important;
+    box-shadow: none !important;
+    background: none !important;
+    padding: 0 0;
 }
-.bus,.passenger{
+
+.passenger {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -270,14 +277,24 @@ span {
     width: 400px !important;
     overflow:hidden ;
     height: auto;
+    margin-bottom: 15px; /* Added spacing between cards */
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    width: 5%;
+    background-color: #f8f9fa;
+    border: #fff solid;
+    padding: 10px;
+    gap: 2rem;
 }
 .search-bus {
-    border-radius: 4px !important;
+    border-radius: 10px !important;
     padding: 10px;
     display: flex;
     width: 90%;
     border: 1px solid #f0eaea;
-    border-radius: 15% !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -286,7 +303,7 @@ span {
     padding: 10px;
     background: white;
     border: 1px solid #ccc;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 .search-bus input {
     padding: 5px;
@@ -324,3 +341,4 @@ span {
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
   }
+

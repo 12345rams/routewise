@@ -128,39 +128,49 @@ const Home = () => {
     <div className="home">
       <div className="left-container">
         <div className="side-bar">
-          <button onClick={() => setShowAddLocation(!showAddLocation)} className="btn btn-primary mb-2">
-            <i className="bi bi-geo-alt-fill"></i>
+          <button onClick={() => setShowAddLocation(!showAddLocation)} style={{border:'none',background:'#f8f9fa'}}>
+          <i className="bi bi-geo-alt"
+          style={{fontSize:'1.5rem',color:'black'}}
+          ></i>
           </button>
-          <button className="btn btn-info mb-2" onClick={() => setAddBuses(!addBuses)}>
-            <i className="bi bi-bus-front-fill"></i>
-            <i className="bi bi-plus-lg"></i>
+          <button style={{border:'none',background:'#f8f9fa'}} onClick={() => setAddBuses(!addBuses)}>
+            <i className="bi bi-bus-front-fill"
+            
+          style={{fontSize:'1.2rem',color:'black'}}></i>
+            <i className="bi bi-plus-lg"
+            
+          style={{fontSize:'1rem',color:'black'}}></i>
           </button>
-          {/* <button className="btn btn-info mb-2">
-            <i className="bi bi-bus-front-fill"></i>
+          <button style={{border:'none',background:'#f8f9fa'}} onClick={locateMe}>
+            <i className="bi bi-crosshair"
+            
+          style={{fontSize:'1.5rem',color:'black'}}></i>
           </button>
-          <button className="btn btn-secondary mb-2">
-            <i className="bi bi-person-circle"></i>
-          </button> */}
-          <button className="btn btn-danger mb-2" onClick={locateMe}>
-            <i className="bi bi-crosshair"></i>
+          <button style={{border:'none',background:'#f8f9fa'}} onClick={() => setShowBuses(!showBuses)}>
+            <i className="bi bi-people-fill"
+            
+          style={{fontSize:'1.5rem',color:'black'}}></i>
           </button>
-          <button className="btn btn-success mb-2" onClick={() => setShowBuses(!showBuses)}>
-            <i className="bi bi-people-fill"></i>
-          </button>
-          <button className="btn btn-success mb-2" onClick={showMsg}>
-            <i className="bi bi-chat-dots"></i>
+          <button style={{border:'none',background:'#f8f9fa'}} onClick={showMsg}>
+            <i className="bi bi-chat-dots"
+            
+          style={{fontSize:'1.5rem',color:'black'}}></i>
           </button>
           <button
             className={`btn ${isLoggedIn ? "btn-danger" : "btn-primary"} mb-2`}
-            onClick={() => setIsLoggedIn(!isLoggedIn)}
+            onClick={() => {
+              setIsLoggedIn(!isLoggedIn)
+            navigate("/signup");
+            }}
           >
-            <i className={`bi ${isLoggedIn ? "bi-box-arrow-right" : "bi-box-arrow-in-right"}`}></i>
+            <i style={{fontSize:'1.2rem'}} className={`bi ${isLoggedIn ? "bi-box-arrow-right" : "bi-box-arrow-in-right"}`
+          }></i>
           </button>
           {!isLoggedIn && <Signup isLoggedIn={isLoggedIn} />}
         </div>
         <div className="left-content card">
           {showBuses ? (
-            <div className="buses card contentLeft-container">
+            <div className="buses card contentLeft-container bus_details">
               <div className="titleLeft-container">
                 <h2>Bus Details</h2>
               </div>
@@ -169,15 +179,31 @@ const Home = () => {
                 <input type="text" placeholder="Search for a Bus" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
               </div>
               {buses.filter((bus) => bus.name.toLowerCase().includes(searchTerm.toLowerCase())).map((bus) => (
-                <div key={bus.id} className="bus">
+             <>   <div key={bus.id} className="bus"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "1rem 1rem",
+                  gap: "0.5rem",
+                  cursor:'default',
+                  borderBottom: '2px solid #a6a6a6' 
+                }}
+               
+                >
                   <i className="bi bi-bus-front-fill"></i>
                   <div>{bus.startLocation} -------- {bus.endLocation}</div>
                   <div>{showBuses && <BusMap map={mapRef.current} bus1={bus} />}</div>
+                  
                 </div>
-              ))}
+
+                </>
+              ))} 
             </div>
           ) : (
-            <div className="passengers card contentLeft-container">
+            <div className="passengers card contentLeft-container passenger_details"
+            style={{gap:'0.5rem'}}
+            >
               <div className="titleLeft-container">
                 <h1>Passengers Details</h1>
               </div>
@@ -193,7 +219,7 @@ const Home = () => {
               {passengers
                 .filter((p) => p.email.toLowerCase().includes(searchTerm.toLowerCase()))
                 .map((passenger) => (
-                  <div
+                <div
                     key={passenger._id}
                     className="passenger card"
                     onClick={() => {
@@ -201,10 +227,30 @@ const Home = () => {
                         flyToPosition(passenger.currLocation.latitude, passenger.currLocation.longitude, passenger.email);
                       }
                     }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "1rem 1rem",
+                      gap: "0.5rem",
+                    cursor:'default',
+                    }}
+                    title={passenger.email}
                   >
-                    <i className="bi bi-person-circle"></i>
-                    <div>{passenger.email}</div>
-                    <i className="bi bi-crosshair " style={{ fontSize: "1.5rem" }}></i>
+                    <i className="bi bi-person-circle" style={{ fontSize: "1.2rem", flexShrink: 0 }}></i>
+                    <div
+                      style={{
+                        flexGrow: 1,
+                        textAlign: "center",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        fontWeight: "500",
+                      }}
+                    >
+                      {passenger.email.length > 10 ? `${passenger.email.slice(0, 10)}...` : passenger.email}
+                    </div>
+                    <i className="bi bi-geo-alt-fill" style={{ fontSize: "1.2rem", flexShrink: 0 }}></i>
                   </div>
                 ))}
             </div>

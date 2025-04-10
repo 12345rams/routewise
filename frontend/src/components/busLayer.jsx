@@ -90,7 +90,23 @@ const BusMap = ({ map,bus1}) => {
     const polylinePoints = await fetchRoute(bus);
     if (polylinePoints) {
       const latLngs = polyline.decode(polylinePoints).map(([lat, lng]) => L.latLng(lat, lng));
-      L.polyline(latLngs, { color: "blue" }).addTo(busLayer);
+     
+L.polyline(latLngs, {
+  color: 'green',
+  weight: 8,
+  opacity: 0.8
+}).addTo(busLayer);
+
+for (let i = 0; i < latLngs.length; i += 10) {
+  L.circleMarker(latLngs[i], {
+    radius: 3,              
+        color: 'white',         
+    fillColor: 'white',     
+    fillOpacity: 1,         
+    stroke: false           
+  }).addTo(busLayer);
+}
+
     }
 
     setActiveBusLayer(busLayer);

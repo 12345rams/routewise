@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { registerUser,loginUser } from "../apiService";
+import { registerUser, loginUser } from "../apiService";
 import logo2 from "../assets/images/Screenshot (243).png";
 import logo from "../assets/images/google-icon-2048x2048-czn3g8x8.png";
 import bus from "../assets/images/uri_ifs___M_152c3fc7-bbc8-4388-8938-2702edeb459e.jpg";
@@ -7,36 +7,41 @@ import bus from "../assets/images/uri_ifs___M_152c3fc7-bbc8-4388-8938-2702edeb45
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./signup.css";
 import { useNavigate } from "react-router-dom"; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Signup = ({isLoggedIn}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-     const navigate=useNavigate();
+    const navigate = useNavigate();
+
     const handleSignup = async (e) => {
         e.preventDefault();
         if (password !== repeatPassword) {
             setError("Passwords do not match!");
+            toast.error("Passwords do not match!");
             return;
         }
         setLoading(true);
         setError("");
         try {
-        let data = await registerUser(email, password);
-           // alert("Signup successful!");
+            let data = await registerUser(email, password);
             const response = await loginUser(email, password);
-            if (!response&&data) {
+            if (!response && data) {
                 throw new Error(response.message || "Sign in failed!");
             }
-            data=await response.json();
-            localStorage.setItem("token",data);
-            localStorage.setItem("username",email);
-            isLoggedIn=true;
+            data = await response.json();
+            localStorage.setItem("token", data);
+            localStorage.setItem("username", email);
+            isLoggedIn = true;
             navigate('/');
-            
+            toast.success("Signup successful!");
         } catch (err) {
             setError(err.message);
+            toast.error(err.message);
         } finally {
             setLoading(false);
         }
@@ -107,6 +112,7 @@ const Signup = ({isLoggedIn}) => {
                     <img className="imageofroutewise" src={bus} alt="Bus" />
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

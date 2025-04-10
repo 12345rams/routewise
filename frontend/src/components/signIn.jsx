@@ -5,13 +5,17 @@ import logo from '../assets/images/google-icon-2048x2048-czn3g8x8.png';
 import bus from "../assets/images/uri_ifs___M_152c3fc7-bbc8-4388-8938-2702edeb459e.jpg";
 import { loginUser } from "../apiService";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./signup.css"; 
+
 const SignIn = ({isLoggedIn}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false); 
     const navigate = useNavigate();
+
     const handleSignIn = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -22,11 +26,14 @@ const SignIn = ({isLoggedIn}) => {
                 throw new Error(response.message || "Sign in failed!");
             }
             localStorage.setItem("token", response);
-            localStorage.setItem("username",email);
-            isLoggedIn=false;
+            localStorage.setItem("username", email);
+            isLoggedIn = false;
+            
+            toast.success("Signin successful!");
             navigate('/');
         } catch (err) {
             setError(err.message);
+            toast.error(err.message);
         } finally {
             setLoading(false);
         }
@@ -88,6 +95,7 @@ const SignIn = ({isLoggedIn}) => {
                     <img className="imageofroutewise" src={bus} alt="Bus" />
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

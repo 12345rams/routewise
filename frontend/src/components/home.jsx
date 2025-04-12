@@ -22,8 +22,6 @@ const Home = () => {
   const [buses, setBuses] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.token !== "");
   const [passengers, setPassengers] = useState([]);
-  const [showChat, setShowChat] = useState(false);
-
   const navigate = useNavigate();
   useEffect(() => {
     const loadPassengers = async () => {

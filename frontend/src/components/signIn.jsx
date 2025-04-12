@@ -9,7 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./signup.css"; 
 
-const SignIn = ({isLoggedIn}) => {
+const SignIn = () => {
+    let  isLoggedIn=false;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");

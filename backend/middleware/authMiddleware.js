@@ -1,14 +1,13 @@
 const { JWT_SECRET } = require("../config/config");
 const jwt = require("jsonwebtoken");
-    const authenticate = async (req, res, next) => {
+const authenticate = async (req, res, next) => {
     let token = req.headers["authorization"];
+    console.log("Token:", req.body);
     if (!token) return res.status(401).json({ message: "Unauthorized" });
     token = token.replace("Bearer ", "");
-    // console.log(token);
     try {
         const data = jwt.verify(token, JWT_SECRET);
         req.user = data;
-        // console.log(data);
         res.status(200).json({ message: "Signin successful!" });
         next();
     }

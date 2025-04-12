@@ -9,14 +9,19 @@ exports.register=async(req,res)=>{
         res.status(400).json({message:error.message});
     }
 };
-exports.login=async(req,res)=>{
-   try{
-     const token=await userService.login((req.body));
-     res.status(201).json(token);
-   }catch(error){
-    res.status(400).json({message:error.message});
-   }
-}
+exports.login = async (req, res) => {
+    try {
+      const token = await userService.login(req.body); 
+      const responseData = {
+        token,
+        message: "Login Successfully"
+      };
+      res.status(200).json(responseData);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+  
 exports.updateLocation=async(req,res)=>{
     try{
       console.log(req.body);

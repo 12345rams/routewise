@@ -23,6 +23,21 @@ export const loginUser = async (email, password) => {
     });
     return response;
 };
+export const verifyUser = async (token) => {
+  try {
+      const response = await fetch(`${BASE_URL}/user/verify`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+          },
+      });
+      return response;
+  } catch (error) {
+      console.error("Error verifying user:", error);
+      return null;
+  }
+};
 export const fetchPassengers = async () => {
     try {
       const response = await fetch(`${BASE_URL}/user/getAllUser`);

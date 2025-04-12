@@ -8,10 +8,10 @@ import BusMap from "./busLayer";
 import Signup from "./signup";
 import markerPerson from "../assets/images/placeholder-removebg-preview.png";
 import passengerIcon from "../assets/images/placeholder-removebg-preview.png";
-import { fetchPassengers, fetchBuses, updateUserLocation } from "../apiService";
-import { useNavigate } from "react-router-dom";
+import { fetchPassengers, fetchBuses, updateUserLocation, verifyUser } from "../apiService";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const Home = () => {
   const mapRef = useRef(null);
@@ -25,18 +25,34 @@ const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.token !== "");
   const [currentUserEmail, setCurrentUserEmail] = useState("");
   const navigate = useNavigate();
+  const location = useLocation(); // To listen for route changes
+
+  const checkLogin = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setIsLoggedIn(false);
+      return;
+    }
+    try {
+      const response = await verifyUser(token);
+      if (response.ok) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    } catch (error) {
+      console.error("Verification failed", error);
+      setIsLoggedIn(false);
+    }
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        setCurrentUserEmail(decoded.email);
-      } catch (err) {
-        console.error("Failed to decode token", err);
-      }
-    }
+    checkLogin(); 
   }, []);
+
+  useEffect(() => {
+    checkLogin();
+  }, [location]);
 
   useEffect(() => {
     const loadPassengers = async () => {
@@ -140,7 +156,12 @@ const Home = () => {
       toast.error("Geolocation is not supported by this browser.");
     }
   };
-
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/signin");
+  };
+  
   const flyToPosition = (lat, lon, name) => {
     if (mapRef.current) {
       mapRef.current.flyTo([lat, lon], 10, { duration: 3 });
@@ -176,15 +197,15 @@ const Home = () => {
             <i className="bi bi-chat-dots" style={{ fontSize: "1.5rem", color: "black" }}></i>
           </button>
           <button
-            className={`btn ${isLoggedIn ? "btn-danger" : "btn-primary"} mb-2`}
-            onClick={() => {
-              setIsLoggedIn(!isLoggedIn);
-              navigate(isLoggedIn ? "/signin" : "/signup");
-            }}
-          >
-            <i className={`bi ${isLoggedIn ? "bi-box-arrow-right" : "bi-box-arrow-in-right"}`} style={{ fontSize: "1.2rem" }}></i>
-          </button>
-          {!isLoggedIn && <Signup isLoggedIn={isLoggedIn} />}
+  className={`btn ${isLoggedIn ? "btn-danger" : "btn-primary"} mb-2`}
+  onClick={handleLogout}
+>
+  <i
+    className={`bi ${isLoggedIn ? "bi-box-arrow-right" : "bi-box-arrow-in-right"}`}
+    style={{ fontSize: "1.2rem" }}
+  ></i>
+</button>
+
         </div>
 
         <div className="left-content card">

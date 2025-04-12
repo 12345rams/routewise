@@ -22,14 +22,14 @@ const SignIn = () => {
         setLoading(true);
         setError("");
         try {
-            const response = await loginUser(email, password);
-            if (!response) {
+            let response = await loginUser(email, password);
+            if (!response.ok) {
                 throw new Error(response.message || "Sign in failed!");
             }
-            localStorage.setItem("token", response);
+            response= await response.json();
+            localStorage.setItem("token", response.token);
             localStorage.setItem("username", email);
             isLoggedIn = false;
-            
             toast.success("Signin successful!");
             navigate('/');
         } catch (err) {
@@ -48,12 +48,6 @@ const SignIn = () => {
                     <h2 className="signup-header">Sign in</h2>
                     <p className="signup-subtext">Access your account</p>
 
-                    <button className="signup-google">
-                        <div className="google-button-content">
-                            <img src={logo} alt="Google" className="google-logo" />
-                            <div>Sign in with Google</div>
-                        </div>
-                    </button>
 
                     <p className="or-text">or</p>
 

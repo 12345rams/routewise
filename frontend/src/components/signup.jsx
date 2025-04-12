@@ -9,8 +9,7 @@ import "./signup.css";
 import { useNavigate } from "react-router-dom"; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const Signup = ({isLoggedIn}) => {
+const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
@@ -36,7 +35,6 @@ const Signup = ({isLoggedIn}) => {
             data = await response.json();
             localStorage.setItem("token", data);
             localStorage.setItem("username", email);
-            isLoggedIn = true;
             navigate('/');
             toast.success("Signup successful!");
         } catch (err) {
@@ -54,13 +52,6 @@ const Signup = ({isLoggedIn}) => {
                 <div className="signupcontainer">
                     <h2 className="signup-header">Sign up now</h2>
                     <p className="signup-subtext">Create a free account</p>
-
-                    <button className="signup-google">
-                        <div className="google-button-content">
-                            <img src={logo} alt="Google" className="google-logo" />
-                            <div>Sign up with Google</div>
-                        </div>
-                    </button>
                     <p className="or-text">or</p>
                     <form className="signupform" onSubmit={handleSignup}>
                         <label htmlFor="email">Email address</label>

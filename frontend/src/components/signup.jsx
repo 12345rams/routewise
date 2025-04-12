@@ -103,7 +103,10 @@ const Signup = ({isLoggedIn}) => {
                         </button>
 
                         <p className="signin-link">
-                            Already have an account? <a href="/signIn">Sign in</a>
+                            Already have an account? 
+                            <button onClick={()=>{
+                                navigate('/signin');
+                            }} >Sign in</button>
                         </p>
                     </form>
                 </div>

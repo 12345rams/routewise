@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
     const authenticate = async (req, res, next) => {
     let token = req.headers["authorization"];
     if (!token) return res.status(401).json({ message: "Unauthorized" });
-    token = token.replace("Bearer ", "").trim();
+    token = token.replace("Bearer ", "");
     // console.log(token);
     try {
         const data = jwt.verify(token, JWT_SECRET);

@@ -19,6 +19,7 @@ const login = async (credential) => {
     const { email, password } = credential;
     const user = await User.findOne({ email });
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log(isPasswordValid);
     if (!isPasswordValid)
         throw new Error("Invalid credentials");
     const token = jwt.sign(

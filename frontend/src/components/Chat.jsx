@@ -3,41 +3,20 @@ import io from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import "./Chat.css";
 import { fetchPassengers, getMessages, sendMessages } from "../apiService";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(BASE_URL);
+
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [passengers, setPassengers] = useState([]);
   const [receiver, setReceiver] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+
   const sender = localStorage.getItem("username");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      if (!receiver) {
-        return;
-      }
-      try {
-        const res = await getMessages(sender, receiver);
-        setMessages(res.data);
-      } catch (err) {
-        console.error("Error fetching messages:", err);
-      }
-    };
-
-    fetchMessages();
-    socket.on("receiveMessage", (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
-    });
-
-    return () => {
-      socket.off("receiveMessage");
-    };
-  },[]);
-
   useEffect(() => {
     const getPassenger = async () => {
       try {
@@ -49,36 +28,58 @@ const Chat = () => {
     };
     getPassenger();
   }, []);
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (!receiver) return;
+      try {
+        const res = await getMessages(sender, receiver);
+        setMessages(res.data);
+      } catch (err) {
+        console.error("Error fetching messages:", err);
+      }
+    };
+    fetchMessages();
+    socket.on("receiveMessage", (data) => {
+      if (data.sender === receiver || data.receiver === receiver) {
+        setMessages((prevMessages) => [...prevMessages, data]);
+      }
+    });
 
+    return () => {
+      socket.off("receiveMessage");
+    };
+  }, [receiver]);
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Enter") {
-        sendMessage();
+        handleSendMessage();
       }
     };
 
     const inputElement = document.querySelector(".write-message");
-    inputElement.addEventListener("keypress", handleKeyPress);
+    inputElement?.addEventListener("keypress", handleKeyPress);
 
     return () => {
-      inputElement.removeEventListener("keypress", handleKeyPress);
+      inputElement?.removeEventListener("keypress", handleKeyPress);
     };
-  }, []);
+  });
 
-  const sendMessage = async () => {
+  const handleSendMessage = async () => {
     if (message.trim() && receiver && sender) {
-      const newMessage = { sender, receiver, content: message };
       try {
-        const message = sendMessages(newMessage);
-        socket.emit("sendMessage", message);
+        const res = await sendMessages({ sender, receiver, content: message });
+        const newMsg = res.data; 
+        socket.emit("sendMessage", newMsg);
+        setMessages((prev) => [...prev, newMsg]);
         setMessage("");
       } catch (error) {
         toast.error("Error sending message");
       }
     } else {
-      toast.error("first login");
+      toast.error("Please login and select a user to chat.");
     }
   };
+
   const filteredPassengers = passengers.filter((chat) =>
     chat.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -106,6 +107,7 @@ const Chat = () => {
             ))}
           </ul>
         </nav>
+
         <section className="discussions">
           <div className="discussion search">
             <div className="searchbar">
@@ -125,24 +127,22 @@ const Chat = () => {
                 <div
                   className="photo"
                   style={{
-                    backgroundImage: `url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=1050&q=80)`,
+                    backgroundImage:
+                      "url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=1050&q=80)",
                   }}
                 >
-                  {chat.email === sender ? (
-                    <div className="online"></div>
-                  ) : (
-                    <div className="offline"></div>
-                  )}
+                  {chat.email === sender ? <div className="online"></div> : <div className="offline"></div>}
                 </div>
                 <div className="desc-contact">
                   <p className="name">{chat.email}</p>
                   <p className="message">Hi</p>
                 </div>
-                <div className="timer">12.09</div>
+                <div className="timer">12:09</div>
               </div>
             </button>
           ))}
         </section>
+
         <section className="chat">
           <div className="header-chat">
             <i className="icon fa fa-user-o" aria-hidden="true"></i>
@@ -153,8 +153,14 @@ const Chat = () => {
           <div className="messages-chat">
             {messages.map((msg, index) => (
               <div key={index} className="message text-only">
-                <p className={`text ${(msg.sender === sender ? "sender-message" : "receiver-message")}`}>{msg.content}</p>
-                <p>{new Date(msg.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</p>
+                <p className={`text ${msg.sender === sender ? "sender-message" : "receiver-message"}`}>
+                  {msg.content}
+                </p>
+                <p className="timestamp">
+                  {msg.timestamp
+                    ? new Date(msg.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+                    : ""}
+                </p>
               </div>
             ))}
           </div>
@@ -172,7 +178,7 @@ const Chat = () => {
               className="icon fa fa-paper-plane clickable"
               style={{ fontSize: "20pt" }}
               aria-hidden="true"
-              onClick={sendMessage}
+              onClick={handleSendMessage}
             ></i>
           </div>
         </section>

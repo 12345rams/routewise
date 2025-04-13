@@ -197,18 +197,17 @@ const Home = () => {
             <i className="bi bi-chat-dots" style={{ fontSize: "1.5rem", color: "black" }}></i>
           </button>
           <button
-  className={`btn ${isLoggedIn ? "btn-danger" : "btn-primary"} mb-2`}
-  onClick={handleLogout}
->
-  <i
-    className={`bi ${isLoggedIn ? "bi-box-arrow-right" : "bi-box-arrow-in-right"}`}
-    style={{ fontSize: "1.2rem" }}
-  ></i>
-</button>
-
+            className={`btn ${isLoggedIn ? "btn-danger" : "btn-primary"} mb-2`}
+            onClick={handleLogout}
+          >
+            <i
+              className={`bi ${isLoggedIn ? "bi-box-arrow-right" : "bi-box-arrow-in-right"}`}
+              style={{ fontSize: "1.2rem" }}
+            ></i>
+          </button>
         </div>
 
-        <div className="left-content card">
+        <div className="left-content">
           {showBuses ? (
             <div className="buses card contentLeft-container bus_details">
               <div className="titleLeft-container">

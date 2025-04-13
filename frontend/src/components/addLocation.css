@@ -13,10 +13,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    top: 10px;
-    left: 18%;
     position:fixed;
-    max-width: 300px;
+    max-width: 370px;
     transform: translateX(-50%);
     background: white;
     border-radius: 8px;

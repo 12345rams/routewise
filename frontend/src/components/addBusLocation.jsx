@@ -4,7 +4,8 @@ import "./style.css";
 import "./addLocation.css";
 import myBusIcon from "../assets/images/bus-stop-removebg-preview.png";
 import { createBus, fetchRoute } from "../apiService";
-const API_KEY =import.meta.env.VITE_API_KEY;
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 const BusRouteManager = ({ map }) => {
     const [busDetails, setBusDetails] = useState({
         busId: "",
@@ -119,10 +120,36 @@ const BusRouteManager = ({ map }) => {
 
         L.polyline(route, { color: "red", weight: 4 }).addTo(map);
     };
+
+const [isVisible, setIsVisible] = useState(true);
+if(!isVisible)return null;
+
     return (
-        <div className="bus-route-overlay">
+        <div className="bus-route-overlay"
+        style={{
+            position: "fixed",
+            top: "10%%",
+            left: "20%",
+            width: "100vw",
+            height: "100vh",
+            backdropFilter: "blur(6px)",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            zIndex: 999,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+        }}
+        >
             <div className="bus-route-container">
                 <div className="bus-route-title">
+                <button
+  className="close-button btn"
+  style={{ position: "absolute", top: "1px", right: "2px", padding: "2px 6px",backgroundColor:"orange" }}
+  onClick={() => setIsVisible(false)}
+>
+  <i className="fa fa-times" style={{ fontSize: "14px" }} aria-hidden="true"></i>
+</button>
+
                     <h2>Add Bus Details</h2>
                 </div>
                 <div className="bus-route-form">

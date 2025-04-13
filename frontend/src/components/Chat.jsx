@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { useNavigate } from "react-router-dom";
-import "./Chat.css";
 import { fetchPassengers, getMessages, sendMessages } from "../apiService";
 import { ToastContainer, toast } from "react-toastify";
+import "./Chat.css";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const socket = io(BASE_URL);
@@ -14,9 +14,12 @@ const Chat = () => {
   const [passengers, setPassengers] = useState([]);
   const [receiver, setReceiver] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   const sender = localStorage.getItem("username");
   const navigate = useNavigate();
+
+  // Fetch passengers
   useEffect(() => {
     const getPassenger = async () => {
       try {
@@ -28,6 +31,22 @@ const Chat = () => {
     };
     getPassenger();
   }, []);
+
+  // Setup socket.io and listen for online users and messages
+  useEffect(() => {
+    if (!sender) return;
+    socket.emit("addUser", sender);
+
+    socket.on("getUsers", (users) => {
+      setOnlineUsers(users);
+    });
+
+    return () => {
+      socket.off("getUsers");
+    };
+  }, [sender]);
+
+  // Fetch messages for the selected receiver
   useEffect(() => {
     const fetchMessages = async () => {
       if (!receiver) return;
@@ -39,6 +58,7 @@ const Chat = () => {
       }
     };
     fetchMessages();
+
     socket.on("receiveMessage", (data) => {
       if (data.sender === receiver || data.receiver === receiver) {
         setMessages((prevMessages) => [...prevMessages, data]);
@@ -48,7 +68,9 @@ const Chat = () => {
     return () => {
       socket.off("receiveMessage");
     };
-  }, [receiver]);
+  }, [receiver, sender]);
+
+  // Handle 'Enter' key press to send message
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Enter") {
@@ -64,11 +86,12 @@ const Chat = () => {
     };
   });
 
+  // Send message
   const handleSendMessage = async () => {
     if (message.trim() && receiver && sender) {
       try {
         const res = await sendMessages({ sender, receiver, content: message });
-        const newMsg = res.data; 
+        const newMsg = res.data;
         socket.emit("sendMessage", newMsg);
         setMessages((prev) => [...prev, newMsg]);
         setMessage("");
@@ -80,6 +103,7 @@ const Chat = () => {
     }
   };
 
+  // Filter passengers based on search input
   const filteredPassengers = passengers.filter((chat) =>
     chat.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -89,22 +113,21 @@ const Chat = () => {
       <div className="row2">
         <nav className="menu">
           <ul className="items">
-            {[
-              { icon: "fa-home", action: () => navigate("/") },
-              { icon: "fa-user" },
-              { icon: "fa-pencil" },
-              { icon: "fa-commenting" },
-              { icon: "fa-file" },
-              { icon: "fa-cog" },
-            ].map((item, index) => (
-              <li
-                key={index}
-                className={`item ${item.icon === "fa-commenting" ? "item-active" : ""}`}
-                onClick={item.action || (() => {})}
-              >
-                <i className={`fa ${item.icon}`} aria-hidden="true"></i>
-              </li>
-            ))}
+            {[{ icon: "fa-home", action: () => navigate("/") },
+            { icon: "fa-user" },
+            { icon: "fa-pencil" },
+            { icon: "fa-commenting" },
+            { icon: "fa-file" },
+            { icon: "fa-cog" }]
+              .map((item, index) => (
+                <li
+                  key={index}
+                  className={`item ${item.icon === "fa-commenting" ? "item-active" : ""}`}
+                  onClick={item.action || (() => { })}
+                >
+                  <i className={`fa ${item.icon}`} aria-hidden="true"></i>
+                </li>
+              ))}
           </ul>
         </nav>
 
@@ -131,7 +154,7 @@ const Chat = () => {
                       "url(https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=1050&q=80)",
                   }}
                 >
-                  {chat.email === sender ? <div className="online"></div> : <div className="offline"></div>}
+                  {onlineUsers.includes(chat.email) ? <div className="online"></div> : <div className="offline"></div>}
                 </div>
                 <div className="desc-contact">
                   <p className="name">{chat.email}</p>

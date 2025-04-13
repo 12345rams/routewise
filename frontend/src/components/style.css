@@ -274,7 +274,6 @@ span {
     border-radius: 0px !important;
     padding: 10px !important;
     margin: 0px !important;
-    width: 400px !important;
     overflow:hidden ;
     height: auto;
     margin-bottom: 15px; /* Added spacing between cards */
@@ -341,4 +340,48 @@ span {
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
   }
+  @media (max-width: 768px) {
+    .side-bar {
+        flex-direction: row;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #f8f9fa; /* optional, add visible background */
+        z-index: 999;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* subtle shadow */
+        gap: 1rem; /* Reduce gap between items */
+    }
+    .map-container {
+        margin-top: 60px;
+        width: 100%; /* Full width by default */
+        display: block; /* Show map-container by default */
+    }
+    .left-content {
+        margin-top: 60px;
+        width: 100%; /* Full width when visible */
+        display: none; /* Hide left-content by default */
+    }
+    .toggle-passenger-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+    .toggle-passenger-btn:hover {
+        background-color: #45a049;
+    }
+}
+
 
